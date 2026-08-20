@@ -66,7 +66,7 @@ fun ConversationScreen(
                         modifier = Modifier.padding(end = 12.dp)
                     ) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.filled.Lock,
+                            imageVector = Icons.Outlined.Lock,
                             contentDescription = "E2EE",
                             modifier = Modifier.size(14.dp),
                             tint = androidx.compose.ui.graphics.Color(0xFF3FB950)
@@ -199,3 +199,4 @@ private fun MessageBubble(message: UiMessage) {
         }
     }
 }
+
