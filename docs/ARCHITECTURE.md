@@ -7,13 +7,16 @@ Cypherchat is a **multi-module Android application** built with Kotlin and Jetpa
 ![Module Overview](media/module-graph.svg)
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                        app                          │
-│              (UI + Navigation + DI)                 │
-├─────────────┬─────────────┬────────────┬────────────┤
-│ core:common │ core:crypto │ core:db    │ core:net   │
-│  (Shared)   │  (Crypto)   │ (Storage)  │ (Transport)│
-└─────────────┴─────────────┴────────────┴────────────┘
+┌───────────────────────┐
+│          app          │
+│ (UI + Navigation + DI)│
+├───────────┬───────────┤
+│core:common│core:crypto│
+│ (Shared)  │ (Crypto)  │
+├───────────┼───────────┤
+│ core:db   │ core:net  │
+│ (Storage) │(Transport)│
+└───────────┴───────────┘
 ```
 
 ## Module Dependency Graph
@@ -123,25 +126,34 @@ ConversationScreen (Compose)
         ▼
 ConversationViewModel
         │
-        ├──► DoubleRatchetState.encryptMessage()  →  ciphertext
+        ├─► DoubleRatchetState
+        │   .encryptMessage()
+        │   → ciphertext
         │
-        ├──► MessageDao.insert()  →  encrypted to SQLCipher DB
+        ├─► MessageDao.insert()
+        │   → encrypted to SQLCipher DB
         │
-        └──► SimplexTransport.send()  →  binary envelope to relay
+        └─► SimplexTransport.send()
+            → binary envelope to relay
 ```
 
 ### Message Receive (future, fully wired)
 ```
-SimplexTransport.receiveMessages()  →  Flow<IncomingEnvelope>
+SimplexTransport.receiveMessages()
+  → Flow<IncomingEnvelope>
         │
         ▼
 ConversationViewModel
         │
-        ├──► DoubleRatchetState.decryptMessage()  →  plaintext
+        ├─► DoubleRatchetState
+        │   .decryptMessage()
+        │   → plaintext
         │
-        ├──► MessageDao.insert()  →  encrypted to SQLCipher DB
+        ├─► MessageDao.insert()
+        │   → encrypted to SQLCipher DB
         │
-        └──► UI update (Compose State)  →  MessageBubble displayed
+        └─► UI update (Compose State)
+            → MessageBubble displayed
 ```
 
 ## Dependency Injection (Koin)

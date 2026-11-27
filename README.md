@@ -3,9 +3,9 @@
 # 🛡️ C Y P H E R C H A T
 ### *End-to-End Encrypted Messaging for Android.*
 
-[![Status](https://img.shields.io/badge/Status-Alpha-50fa7b?style=for-the-badge)]()
-[![Platform](https://img.shields.io/badge/Platform-Android_24%2B-4c566a?style=for-the-badge&logo=android)]()
-[![License](https://img.shields.io/badge/license-MIT-f1fa8c?style=for-the-badge)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Alpha-50fa7b?style=flat-square)]()
+[![Platform](https://img.shields.io/badge/Platform-Android_24%2B-4c566a?style=flat-square&logo=android)]()
+[![License](https://img.shields.io/badge/license-MIT-f1fa8c?style=flat-square)](LICENSE)
 
 **[📲 Download APK](https://github.com/earnerbaymalay/cyph3rchat/releases)** · **[🌐 Sideload Hub](https://earnerbaymalay.github.io/sideload/)** · **[📖 Usage Guide](docs/USAGE.md)** · **[🔧 Troubleshooting](TROUBLESHOOTING.md)**
 
@@ -50,14 +50,24 @@ Open in Android Studio → Sync Gradle → Run (Minimum SDK 24, Target SDK 34, J
 
 ## Cryptography
 
-| Layer | Algorithm | Purpose |
-|-------|-----------|---------|
-| Key storage | Android Keystore (hardware-backed) | Generates and protects AES-256-GCM keys. |
-| Symmetric encryption | AES-256-GCM | Encrypts message payloads with 128-bit authentication tag. |
-| Key derivation | HKDF-SHA256 (RFC 5869) | Derives message keys from the root chain. |
-| Key agreement | ECDH (P-256 / secp256r1) | Diffie-Hellman key exchange for Double Ratchet. |
-| Double Ratchet | Root chain + Message chains | Forward secrecy and break-in recovery. |
-| Database at rest | SQLCipher (AES-256-CBC) | Encrypts entire database file. |
+- **Key storage**
+  - Algorithm: Android Keystore (hardware-backed)
+  - Purpose: Generates and protects AES-256-GCM keys.
+- **Symmetric encryption**
+  - Algorithm: AES-256-GCM
+  - Purpose: Encrypts message payloads with 128-bit authentication tag.
+- **Key derivation**
+  - Algorithm: HKDF-SHA256 (RFC 5869)
+  - Purpose: Derives message keys from the root chain.
+- **Key agreement**
+  - Algorithm: ECDH (P-256 / secp256r1)
+  - Purpose: Diffie-Hellman key exchange for Double Ratchet.
+- **Double Ratchet**
+  - Algorithm: Root chain + Message chains
+  - Purpose: Forward secrecy and break-in recovery.
+- **Database at rest**
+  - Algorithm: SQLCipher (AES-256-CBC)
+  - Purpose: Encrypts entire database file.
 
 Plaintext messages are never written to disk; only ciphertext is stored. Chain keys and passphrases are securely erased from memory after use.
 
@@ -67,20 +77,28 @@ Plaintext messages are never written to disk; only ciphertext is stored. Chain k
 
 ```
 cyph3rchat/
-├── app/                          # Jetpack Compose UI, Koin DI
+├── app/
 │   ├── Cyph3rChatApplication
-│   ├── MainActivity              # NavHost, PIN lock, JSON export
+│   ├── MainActivity
 │   └── ui/screen/
 │       ├── OnboardingScreen
 │       ├── ChatListScreen
 │       └── ConversationScreen
 ├── core/
-│   ├── common/                   # SecureResult<T>, Logger, DispatcherProvider
-│   ├── crypto/                   # KeyStoreManager, AesGcmCipher, HkdfDerivation, DoubleRatchetState
-│   ├── database/                 # SQLCipher Room database
-│   └── network/                  # SimplexTransport interface
-└── design/cypherchat-ui.html     # UI reference mockup
+│   ├── common/
+│   ├── crypto/
+│   ├── database/
+│   └── network/
+└── design/cypherchat-ui.html
 ```
+
+- `app/` — Jetpack Compose UI, Koin DI
+- `app/MainActivity` — NavHost, PIN lock, JSON export
+- `core/common/` — SecureResult<T>, Logger, DispatcherProvider
+- `core/crypto/` — KeyStoreManager, AesGcmCipher, HkdfDerivation, DoubleRatchetState
+- `core/database/` — SQLCipher Room database
+- `core/network/` — SimplexTransport interface
+- `design/cypherchat-ui.html` — UI reference mockup
 
 ---
 
@@ -88,9 +106,9 @@ cyph3rchat/
 
 <div align="center">
 
-| Onboarding | Chat List | Conversation |
-|------------|-----------|--------------|
-| ![Onboarding](docs/media/screenshot_onboarding.svg) | ![Chat List](docs/media/screenshot_chat_list.svg) | ![Conversation](docs/media/screenshot_conversation.svg) |
+- ![Onboarding](docs/media/screenshot_onboarding.svg)
+  - Chat List: ![Chat List](docs/media/screenshot_chat_list.svg)
+  - Conversation: ![Conversation](docs/media/screenshot_conversation.svg)
 
 </div>
 
@@ -129,12 +147,22 @@ Open in Android Studio → Sync Gradle → Run (Minimum SDK 24, Target SDK 34, J
 
 <div align="center">
 
-| Project | Platform | Description | Link |
-|---------|----------|-------------|------|
-| 🌗 **Gloam** | 📱 Android / 🖥️ Desktop | Solar-timed CBT journal | [Source →](https://github.com/earnerbaymalay/Gloam) |
-| 🌌 **Aether** | 📱 Android (Termux) | Local-first AI workstation | [Source →](https://github.com/earnerbaymalay/aether) |
-| 📲 **Sideload Hub** | 🌐 Web / PWA | Central app distribution | [Open Hub →](https://earnerbaymalay.github.io/sideload/) |
-| 🧰 **Termux-Vault** | 📱 Android | Encrypted secrets manager | [Source →](https://github.com/earnerbaymalay/Termux-Vault) |
+- **🌗 **Gloam****
+  - Platform: 📱 Android / 🖥️ Desktop
+  - Description: Solar-timed CBT journal
+  - Link: [Source →](https://github.com/earnerbaymalay/Gloam)
+- **🌌 **Aether****
+  - Platform: 📱 Android (Termux)
+  - Description: Local-first AI workstation
+  - Link: [Source →](https://github.com/earnerbaymalay/aether)
+- **📲 **Sideload Hub****
+  - Platform: 🌐 Web / PWA
+  - Description: Central app distribution
+  - Link: [Open Hub →](https://earnerbaymalay.github.io/sideload/)
+- **🧰 **Termux-Vault****
+  - Platform: 📱 Android
+  - Description: Encrypted secrets manager
+  - Link: [Source →](https://github.com/earnerbaymalay/Termux-Vault)
 
 </div>
 

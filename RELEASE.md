@@ -31,7 +31,8 @@ Cypherchat uses [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
 ./gradlew bundleRelease
 
 # Verify signing
-apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk
+apksigner verify \
+  --print-certs app/build/outputs/apk/release/app-release.apk
 ```
 
 ### Post-Release

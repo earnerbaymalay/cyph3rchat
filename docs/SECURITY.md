@@ -10,23 +10,39 @@
 
 ### Threat Actors
 
-| Actor | Capability | What Cypherchat Prevents |
-|---|---|---|---|
-| **Network adversary** | Passive MITM, active MITM | ✅ Cannot read messages (E2EE with AES-256-GCM) |
-| **Server operator** | Full server access | ✅ Cannot read messages (E2EE), cannot identify users (SimpleX) |
-| **Device thief** | Physical access to phone | ✅ Cannot read messages (Keystore + SQLCipher) |
-| **Forensic analyst** | Law enforcement with device | ✅ Cannot extract keys (Keystore non-exportable), cannot read DB (SQLCipher) |
-| **Malicious app** | Other apps on the device | ✅ Cannot access Keystore keys (app-scoped), cannot read DB file |
-| **Compromised contact** | Their device is hacked | ✅ Past messages safe (forward secrecy), future messages safe after DH ratchet |
+- **Network adversary**
+  - Capability: Passive MITM, active MITM
+  - What Cypherchat Prevents: ✅ Cannot read messages (E2EE with AES-256-GCM)
+- **Server operator**
+  - Capability: Full server access
+  - What Cypherchat Prevents: ✅ Cannot read messages (E2EE), cannot identify users (SimpleX)
+- **Device thief**
+  - Capability: Physical access to phone
+  - What Cypherchat Prevents: ✅ Cannot read messages (Keystore + SQLCipher)
+- **Forensic analyst**
+  - Capability: Law enforcement with device
+  - What Cypherchat Prevents: ✅ Cannot extract keys (Keystore non-exportable), cannot read DB (SQLCipher)
+- **Malicious app**
+  - Capability: Other apps on the device
+  - What Cypherchat Prevents: ✅ Cannot access Keystore keys (app-scoped), cannot read DB file
+- **Compromised contact**
+  - Capability: Their device is hacked
+  - What Cypherchat Prevents: ✅ Past messages safe (forward secrecy), future messages safe after DH ratchet
 
 ### What Cypherchat Does NOT (Yet) Protect Against
 
-| Threat | Status | Mitigation Plan |
-|---|---|---|
-| **Endpoint compromise** (malware on device) | ⚠️ Not protected | Out of scope — requires OS-level security |
-| **Social engineering** | ⚠️ Not protected | Key verification UI (planned) will help |
-| **Screen capture / keylogger** | ⚠️ Not protected | FLAG_SECURE in release builds (planned) |
-| **Quantum computing** | 🔮 Future | Post-quantum key exchange (research phase) |
+- **Endpoint compromise** (malware on device)
+  - Status: ⚠️ Not protected
+  - Mitigation Plan: Out of scope — requires OS-level security
+- **Social engineering**
+  - Status: ⚠️ Not protected
+  - Mitigation Plan: Key verification UI (planned) will help
+- **Screen capture / keylogger**
+  - Status: ⚠️ Not protected
+  - Mitigation Plan: FLAG_SECURE in release builds (planned)
+- **Quantum computing**
+  - Status: 🔮 Future
+  - Mitigation Plan: Post-quantum key exchange (research phase)
 
 ## Cryptographic Protocols
 
@@ -86,11 +102,15 @@ Envelope: [VERSION(1)] [IV(12)] [CIPHERTEXT + TAG(variable)]
 
 **Architecture:**
 ```
-Root Key ──┬── DH output ──→ KDF_RK ──→ New Root Key + New Chain Key
-           │
-     Chain Key ──→ KDF_CK ──→ New Chain Key + Message Key
-                                      │
-                                      └── AES-256-GCM encrypt
+Root Key ─┬─ DH output ─► KDF_RK
+          │   └─► New Root Key
+          │       + New Chain Key
+          │
+   Chain Key ─► KDF_CK
+          └─► New Chain Key
+              + Message Key
+                  │
+                  └─ AES-256-GCM encrypt
 ```
 
 **Security properties:**

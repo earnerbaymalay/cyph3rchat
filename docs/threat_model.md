@@ -47,12 +47,11 @@ Device A ──[E2EE envelope]──► SimpleX Relay ──[E2EE envelope]─�
 
 ### At Rest (Device)
 ```
-Plaintext ──[AES-256-GCM]──► Ciphertext ──[SQLCipher]──► Encrypted DB
-                                      │
-                            ┌─────────┴──────────┐
-                            │   Android Keystore  │
-                            │   (hardware-bound)  │
-                            └─────────────────────┘
+Plaintext ─[AES-256-GCM]─► Ciphertext
+   ─[SQLCipher]─► Encrypted DB
+          │
+   Android Keystore
+   (hardware-bound)
 ```
 - **Threat:** Device theft or forensic analysis
 - **Mitigation:** Keystore keys cannot be extracted. Database requires Keystore-derived passphrase.
@@ -67,16 +66,46 @@ Plaintext ──► Encrypt ──► Ciphertext ──► [Plaintext zeroed]
 
 ## Risk Matrix
 
-| Threat | Likelihood | Impact | Risk Level | Status |
-|---|---|---|---|---|
-| Network MITM | High | Critical | 🔴 HIGH | ✅ Mitigated (E2EE) |
-| Server compromise | Medium | High | 🟡 MEDIUM | ✅ Mitigated (SimpleX + E2EE) |
-| Device theft | Medium | Critical | 🔴 HIGH | ✅ Mitigated (Keystore + SQLCipher) |
-| Malware on device | Low | Critical | 🟡 MEDIUM | ⚠️ Partial (sandbox) |
-| Key verification failure | Medium | High | 🟡 MEDIUM | 🔮 Planned (fingerprint UI) |
-| Quantum attack | Low | Critical | 🟡 MEDIUM | 🔮 Research phase |
-| Social engineering | Medium | High | 🟡 MEDIUM | ⚠️ User education needed |
-| Supply chain attack | Low | Critical | 🟡 MEDIUM | ✅ Mitigated (pinned deps) |
+- **Network MITM**
+  - Likelihood: High
+  - Impact: Critical
+  - Risk Level: 🔴 HIGH
+  - Status: ✅ Mitigated (E2EE)
+- **Server compromise**
+  - Likelihood: Medium
+  - Impact: High
+  - Risk Level: 🟡 MEDIUM
+  - Status: ✅ Mitigated (SimpleX + E2EE)
+- **Device theft**
+  - Likelihood: Medium
+  - Impact: Critical
+  - Risk Level: 🔴 HIGH
+  - Status: ✅ Mitigated (Keystore + SQLCipher)
+- **Malware on device**
+  - Likelihood: Low
+  - Impact: Critical
+  - Risk Level: 🟡 MEDIUM
+  - Status: ⚠️ Partial (sandbox)
+- **Key verification failure**
+  - Likelihood: Medium
+  - Impact: High
+  - Risk Level: 🟡 MEDIUM
+  - Status: 🔮 Planned (fingerprint UI)
+- **Quantum attack**
+  - Likelihood: Low
+  - Impact: Critical
+  - Risk Level: 🟡 MEDIUM
+  - Status: 🔮 Research phase
+- **Social engineering**
+  - Likelihood: Medium
+  - Impact: High
+  - Risk Level: 🟡 MEDIUM
+  - Status: ⚠️ User education needed
+- **Supply chain attack**
+  - Likelihood: Low
+  - Impact: Critical
+  - Risk Level: 🟡 MEDIUM
+  - Status: ✅ Mitigated (pinned deps)
 
 ## Assumptions
 
@@ -87,9 +116,15 @@ Plaintext ──► Encrypt ──► Ciphertext ──► [Plaintext zeroed]
 
 ## Future Threats
 
-| Threat | Timeline | Mitigation Plan |
-|---|---|---|
-| Quantum computing | 10-20 years | Post-quantum key exchange (Kyber, NTRU) |
-| AI-powered traffic analysis | 5-10 years | Cover traffic, timing obfuscation |
-| Keystore vulnerabilities | Ongoing | Multiple key storage backends (Tink, BouncyCastle) |
-| Regulatory pressure | Ongoing | No central server to subpoena, no user database |
+- **Quantum computing**
+  - Timeline: 10-20 years
+  - Mitigation Plan: Post-quantum key exchange (Kyber, NTRU)
+- **AI-powered traffic analysis**
+  - Timeline: 5-10 years
+  - Mitigation Plan: Cover traffic, timing obfuscation
+- **Keystore vulnerabilities**
+  - Timeline: Ongoing
+  - Mitigation Plan: Multiple key storage backends (Tink, BouncyCastle)
+- **Regulatory pressure**
+  - Timeline: Ongoing
+  - Mitigation Plan: No central server to subpoena, no user database
